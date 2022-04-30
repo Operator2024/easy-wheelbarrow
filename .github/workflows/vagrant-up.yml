@@ -18,7 +18,7 @@ jobs:
       run: vboxmanage hostonlyif create
     
     - name: Configure /etc/vbox/networks
-      run: mkdir /etc/vbox/ && echo "* 192.168.56.0/24 192.168.99.0/24" > /etc/vbox/networks.conf
+      run: sudo mkdir /etc/vbox/ && sudo echo "* 192.168.56.0/24 192.168.99.0/24" > /etc/vbox/networks.conf
     
     - name: Configure hostonlyif
       run: vboxmanage hostonlyif ipconfig 'vboxnet0' --ip 192.168.99.1 --netmask 255.255.255.0
