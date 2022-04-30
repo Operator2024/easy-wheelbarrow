@@ -12,7 +12,7 @@ jobs:
     - name: Get and install vagrant
       run: wget https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb && sudo dpkg -i vagrant_2.2.19_x86_64.deb
     - name: Get and install virtualbox
-      run: wget https://download.virtualbox.org/virtualbox/6.1.34/virtualbox-6.1_6.1.34-150636.1~Ubuntu~eoan_amd64.deb && sudo dpkg -i virtualbox-6.1_6.1.34-150636.1~Ubuntu~eoan_amd64.deb
+      run: sudo apt-get install virtualbox virtualbox-ext-pack virtualbox-guest-utils -y
 
     - name: Create hostonlyif
       run: vboxmanage hostonlyif create
@@ -22,9 +22,6 @@ jobs:
     
     - name: Configure hostonlyif
       run: vboxmanage hostonlyif ipconfig 'vboxnet0' --ip 192.168.99.1 --netmask 255.255.255.0
-    
-    - name: Install ext-pack and guest-tools
-      run: sudo apt-get install virtualbox-ext-pack virtualbox-guest-utils -y
 
     - name: Cache Vagrant boxes
       uses: actions/cache@v3
