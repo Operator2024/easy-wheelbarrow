@@ -129,7 +129,12 @@ Vagrant.configure("2") do |config|
   # Interface 'VirtualBox Host-Only Ethernet Adapter #2' was successfully created
   # Copy interface name for next step and command config.vm.network that below
   # 2. vboxmanage.exe hostonlyif ipconfig "VirtualBox Host-Only Ethernet Adapter #2" --ip 192.168.99.1 --netmask 255.255.255.252  
-  config.vm.network "private_network", ip: "192.168.99.2", name: "VirtualBox Host-Only Ethernet Adapter #2"
+  if Vagrant::Util::Platform.windows? then
+    config.vm.network "private_network", ip: "192.168.99.2", name: "VirtualBox Host-Only Ethernet Adapter #2"
+  else
+   # vboxnet0
+    config.vm.network "private_network", ip: "192.168.99.2", name: "vboxnet0"
+  end
   # Cahnge interface name 'enp' to 'eth'
   config.vm.provision "Configure netplan vagrant", after: :each, type: "shell", run: "once", inline: <<-SHELL
     sed -i 's/enp[0-9]s[0-9]/eth1/gm' /etc/netplan/50-vagrant.yaml && printf "      routes:\n      - to: default\n        via: 192.168.99.1\n        metric: 101\n      nameservers:\n        addresses: [1.1.1.1, 8.8.8.8]\n" >> /etc/netplan/50-vagrant.yaml && netplan apply
