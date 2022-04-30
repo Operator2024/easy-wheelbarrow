@@ -72,7 +72,12 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-  config.vm.synced_folder "share/", "/home/vagrant/shared", create: true, disable: false, group: "vagrant", owner: "vagrant", automount: true
+  if Vagrant::Util::Platform.windows? then
+    config.vm.synced_folder "share/", "/home/vagrant/shared", create: true, disable: false, group: "vagrant", owner: "vagrant", automount: true
+  else
+   # vboxnet0
+    config.vm.synced_folder "share/", "/home/vagrant/shared", create: false, disable: true, group: "vagrant", owner: "vagrant", automount: false
+  end
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
