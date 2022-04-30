@@ -9,6 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Get and install vagrant
+      run: wget https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb & sudo dpkg -i vagrant_2.2.19_x86_64.deb
+
     - name: Cache Vagrant boxes
       uses: actions/cache@v3
       with:
