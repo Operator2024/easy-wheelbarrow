@@ -30,8 +30,14 @@ $env:VAGRANT_EXPERIMENTAL="dependency_provisioners"
 ```
 
 5. Use vboxmanage.exe for create interface "**vboxmanage.exe hostonlyif create**" or via GUI in VBox
-6. Use vboxmanage.exe for settings created interface "**vboxmanage.exe hostonlyif ipconfig "VirtualBox Host-Only Ethernet Adapter #2" --ip 192.168.99.1 --netmask 255.255.255.252**"
-7. SSH key private and public files **must be located in the root directory** and have the names '**id_rsa**' and '**id_rsa.pub**'. If you do not need access by key then comment out strings in 'Vagrantfile' from 114 to 119.
+   
+```
+vboxmanage hostonlyif create
+# Interface '%random_interface_name%' was successfully created
+```
+
+6. Use vboxmanage.exe for settings created interface **`"vboxmanage.exe hostonlyif ipconfig "%random_interface_name%" --ip 192.168.99.1 --netmask 255.255.255.252"`** and add **`%random_interface_name%`** of created interface to [Vagrantfile](https://github.com/Operator2024/easy-wheelbarrow/blob/master/Vagrantfile#L137)
+7. SSH key private and public files **must be located in the root directory** and have the names '**id_rsa**' and '**id_rsa.pub**'. If you do not need access by key then comment out strings in 'Vagrantfile' from 118 to 122.
 8. Vagrant up and wait...
 
 # Warning
@@ -43,9 +49,9 @@ Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
 
 # Info
 
-Folder 'share' mount to guest system to path - /home/vagrant/shared . After provisioning can you connect to vbox via '**vagrant ssh**' or via '**ssh**'.
+Folder '**share**' mount to guest system to path: `/home/vagrant/shared`. After provisioning can you connect to vbox via '**vagrant ssh**' or via '**ssh**'.
 
-Default name for guest machine: Cyriaque. Attribute 'v.name' in vagrantfile
+Default name for guest machine: Cyriaque. Attribute 'v.name' in Vagrantfile
 
 Starts vagrant with mode logging debug in to file .\vagrant.log
 ```powershell

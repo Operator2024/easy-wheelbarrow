@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
     v.default_nic_type = "82540EM"
     v.memory = 2048
     v.cpus = 2
-    v.linked_clone = true
+    v.linked_clone = false
   end
   config.vm.hostname = "trex.local"
 
@@ -75,7 +75,6 @@ Vagrant.configure("2") do |config|
   if Vagrant::Util::Platform.windows? then
     config.vm.synced_folder "share/", "/home/vagrant/shared", create: true, disable: false, group: "vagrant", owner: "vagrant", automount: true
   else
-   # vboxnet0
     config.vm.synced_folder "share/", "/home/vagrant/shared", create: false, disable: true, group: "vagrant", owner: "vagrant", automount: false
   end
 
@@ -107,14 +106,14 @@ Vagrant.configure("2") do |config|
   config.vm.provision "Package installer", type: "shell", run: "once", inline: <<-SHELL
     apt-get install -y traceroute ifupdown python3.8-venv sshuttle git  net-tools python3-pip
   SHELL
-  config.vm.provision "Configure netplan cloud-init", type: "shell", run: "once", inline: <<-SHELL
-    ls -1 /sys/class/net/ | grep -E "([^lo]|enp.{1,})" | xargs -I {} bash -c "sed -i 's/{}/eth0/g' /etc/netplan/50-cloud-init.yaml"
-  SHELL
   config.vm.provision "GRUB editor", type: "shell", run: "once", inline: <<-SHELL
     sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/g' /etc/default/grub
   SHELL
   config.vm.provision "Update GRUB", type: "shell", reboot: true, run: "once", inline: <<-SHELL
     update-grub
+  SHELL
+  config.vm.provision "Configure netplan cloud-init", type: "shell", run: "once", inline: <<-SHELL
+    ls -1 /sys/class/net/ | grep -E "([^lo]|enp.{1,})" | xargs -I {} bash -c "sed -i 's/{}/eth0/g' /etc/netplan/50-cloud-init.yaml"
   SHELL
   config.vm.provision "Copying ssh public key", type: "file", source: "id_rsa.pub", run: "once", destination: "/home/vagrant/.ssh/id_rsa.pub"
   config.vm.provision "Copying ssh private key", type: "file", source: "id_rsa", run: "once", destination: "/home/vagrant/.ssh/id_rsa"

@@ -44,4 +44,10 @@ jobs:
       run: vagrant up
 
     - name: ssh into box after boot
-      run: vagrant ssh -c "echo 'hello world!'"
+      run: vagrant ssh -c "echo 'easy-wheelbarrow UP'"
+    
+    - name: Run vagrant up
+      run: vagrant halt
+    
+    - name: Run vagrant up
+      run: vagrant destroy -f
