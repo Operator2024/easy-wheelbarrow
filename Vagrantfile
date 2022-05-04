@@ -38,12 +38,13 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/focal64"
   config.vm.box_version = "20220427.0.0"
+  #config.vm.box_url = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-vagrant.box"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   config.vm.box_check_update = false
-  config.vm.box_download_checksum = "f8193d59dd7a8567c91c47f1cc5d6b4dac716ec05d8d2c66ae9d20a3f07c2f4f"
+  config.vm.box_download_checksum = "de161cbe668f72bd7469f21f8ce3dcef408119e51c025da48cffaa9bc0bef19d"
   config.vm.box_download_checksum_type = "sha256"
 
   # Create a forwarded port mapping which allows access to a specific port

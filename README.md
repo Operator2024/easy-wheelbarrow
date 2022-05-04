@@ -39,7 +39,7 @@ vboxmanage hostonlyif create
 # Interface '%random_interface_name%' was successfully created
 ```
 
-6. Use vboxmanage.exe for settings created interface **`"vboxmanage.exe hostonlyif ipconfig "%random_interface_name%" --ip 192.168.99.1 --netmask 255.255.255.252"`** and add **`%random_interface_name%`** of created interface to [Vagrantfile](https://github.com/Operator2024/easy-wheelbarrow/blob/master/Vagrantfile#L137) 
+6. Use vboxmanage.exe for settings created interface **`"vboxmanage.exe hostonlyif ipconfig "%random_interface_name%" --ip 192.168.99.1 --netmask 255.255.255.252"`** and add **`%random_interface_name%`** of created interface to [**Vagrantfile**](https://github.com/Operator2024/easy-wheelbarrow/blob/master/Vagrantfile#L138) 
 
 ```
 vboxmanage list hostonlyifs
@@ -72,7 +72,8 @@ VBoxNetworkName: HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter #
 ```
 
 7. SSH key private and public files **must be located in the root directory** and have the names '**id_rsa**' and '**id_rsa.pub**'. If you do not need access by key then comment out strings in 'Vagrantfile' from 118 to 122.
-8. Vagrant up and wait...
+8. if `https://vagrantcloud.com/search.` is not available (in Russia, for example), then need comment out 'config.vm.box_version' and set 'config.vm.box_url'. For example, ubuntu cloud image - `https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-vagrant.box`. Checksums for the image are also located on the site where the image is stored
+9. Vagrant up and wait...
 
 # Warning
 
@@ -83,9 +84,17 @@ Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
 
 # Info
 
+> ⚠️ Only the first "**vagrant up**" command produces setup and provisioning VM, subsequent runs '**vagrant up**' produce only run of the VM.
+However, if executing '**vagrant up provision**' then will be produced step "**OS updater**" from [**Vagrantfile**](https://github.com/Operator2024/easy-wheelbarrow/blob/master/Vagrantfile#L104) 
+
+1. **vagrant box list** - display list of boxes
+2. **vagrant up** - running the machine
+3. **vagrant halt** - shutdown the machine
+4. **vagrant destroy** - full remove the machine
+
 Folder '**share**' mount to guest system to path: `/home/vagrant/shared`. After provisioning can you connect to vbox via '**vagrant ssh**' or via '**ssh**'.
 
-Default name for guest machine: Cyriaque. Attribute 'v.name' in Vagrantfile
+Default name for guest machine: **Cyriaque**. Attribute 'v.name' in Vagrantfile
 
 Starts vagrant with mode logging debug in to file .\vagrant.log
 ```powershell
