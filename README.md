@@ -23,11 +23,14 @@ Example with structure:
 .\Oracle_VM_VirtualBox_Extension
 .\Vagrant_2.2.19.msi
 ```
-And
+And execute powershell script
+
 ```Powershell
-$env:Path=$env:Path +"C:\Program Files\Oracle\VirtualBox"
+$env:Path=$env:Path +";C:\Program Files\Oracle\VirtualBox"
 $env:VAGRANT_EXPERIMENTAL="dependency_provisioners"
 ```
+>These environment variables have been changed for the duration of the Powershell session
+
 
 5. Use vboxmanage.exe for create interface "**vboxmanage.exe hostonlyif create**" or via GUI in VBox
    
@@ -36,7 +39,38 @@ vboxmanage hostonlyif create
 # Interface '%random_interface_name%' was successfully created
 ```
 
-6. Use vboxmanage.exe for settings created interface **`"vboxmanage.exe hostonlyif ipconfig "%random_interface_name%" --ip 192.168.99.1 --netmask 255.255.255.252"`** and add **`%random_interface_name%`** of created interface to [Vagrantfile](https://github.com/Operator2024/easy-wheelbarrow/blob/master/Vagrantfile#L137)
+6. Use vboxmanage.exe for settings created interface **`"vboxmanage.exe hostonlyif ipconfig "%random_interface_name%" --ip 192.168.99.1 --netmask 255.255.255.252"`** and add **`%random_interface_name%`** of created interface to [Vagrantfile](https://github.com/Operator2024/easy-wheelbarrow/blob/master/Vagrantfile#L137) 
+
+```
+vboxmanage list hostonlyifs
+
+Name:            VirtualBox Host-Only Ethernet Adapter
+GUID:            4a7fa59f-50a0-4e44-a91a-dc0064592f8a
+DHCP:            Disabled
+IPAddress:       192.168.56.1
+NetworkMask:     255.255.255.0
+IPV6Address:
+IPV6NetworkMaskPrefixLength: 0
+HardwareAddress: 0a:00:27:00:00:0b
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter
+
+Name:            VirtualBox Host-Only Ethernet Adapter #2
+GUID:            695a2c2b-7783-462f-b817-adb8693970aa
+DHCP:            Disabled
+IPAddress:       192.168.99.1
+NetworkMask:     255.255.255.252
+IPV6Address:
+IPV6NetworkMaskPrefixLength: 0
+HardwareAddress: 0a:00:27:00:00:0f
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter #2
+```
+
 7. SSH key private and public files **must be located in the root directory** and have the names '**id_rsa**' and '**id_rsa.pub**'. If you do not need access by key then comment out strings in 'Vagrantfile' from 118 to 122.
 8. Vagrant up and wait...
 
