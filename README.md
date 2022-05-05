@@ -71,9 +71,14 @@ Status:          Up
 VBoxNetworkName: HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter #2
 ```
 
-7. SSH key private and public files **must be located in the root directory** and have the names '**id_rsa**' and '**id_rsa.pub**'. If you do not need access by key then comment out strings in 'Vagrantfile' from 118 to 122.
+7. SSH key private and public files **must be located in the root directory** and have the names '**id_rsa**' and '**id_rsa.pub**'. If you do not need access by key then comment out strings in 'Vagrantfile' from 119 to 123. Setup correct rights for private and public keys.
+   ```
+   ssh directory: 700 (drwx------)
+   public key ( . pub file): 644 (-rw-r--r--)
+   private key ( id_rsa ): 600 (-rw-------)
+   ```
 8. if `https://vagrantcloud.com/search.` is not available (in Russia, for example), then need comment out 'config.vm.box_version' and set 'config.vm.box_url'. For example, ubuntu cloud image - `https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-vagrant.box`. Checksums for the image are also located on the site where the image is stored
-9. Vagrant up and wait...
+9.  Vagrant up and wait...
 
 # Warning
 
